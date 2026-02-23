@@ -1,0 +1,1 @@
+echo -e "pyTelegramBotAPI\ngoogle-generativeai\nPillow" > requirements.txt
