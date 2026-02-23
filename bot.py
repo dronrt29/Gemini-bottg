@@ -1,6 +1,26 @@
 import telebot
 import google.generativeai as genai
 import PIL.Image
+from flask import Flask
+from threading import Thread
+import os
+
+# --- ВЕБ-СЕРВЕР ДЛЯ ОБМАНА RENDER ---
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "I'm alive"
+
+def run():
+    # Render передает порт в переменную окружения PORT
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
+# ------------------------------------
 
 # ТВОИ КЛЮЧИ
 TG_TOKEN = "8616125372:AAFPRxzh90kRSyFEgKeSi2mzFjhz1FWXgMs"
@@ -29,4 +49,7 @@ def handle_message(message):
         print(f"Ошибка: {e}")
 
 if __name__ == "__main__":
+    print("Запуск веб-сервера...")
+    keep_alive()  # Запускаем притворный сайт в отдельном потоке
+    print("Бот запущен...")
     bot.polling(none_stop=True)
