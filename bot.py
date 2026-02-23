@@ -1,9 +1,8 @@
-cat <<EOF > bot.py
 import telebot
 import google.generativeai as genai
 import PIL.Image
-import os
 
+# ТВОИ КЛЮЧИ
 TG_TOKEN = "8616125372:AAFPRxzh90kRSyFEgKeSi2mzFjhz1FWXgMs"
 GOOGLE_API_KEY = "AIzaSyBI-y4bWb1bwUiYqy69omEup1q4DxklukE"
 
@@ -27,9 +26,7 @@ def handle_message(message):
             response = model.generate_content([caption, img])
             bot.reply_to(message, response.text)
     except Exception as e:
-        bot.reply_to(message, f"Ошибка: {str(e)}")
+        print(f"Ошибка: {e}")
 
 if __name__ == "__main__":
-    print("Бот запущен...")
     bot.polling(none_stop=True)
-EOF
